@@ -1,16 +1,28 @@
 import React, { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import {api} from "./Services/api";
+import { Photo, getPhotos } from "./Services/Api";
+import ShowPhotos from "./component/Show";
+import "./component/SelectingCategories";
+// import { categorySelector } from "./component/SelectingCategories";
 
 function App() {
+  const [category, setcategory] = useState([]);
+  const [photos, setPhotos] = useState<Photo[]>([]);
 
-  api
+  useEffect(() => {
+    getPhotos().then((photos) => setPhotos(photos));
+  }, []);
 
   console.log(photos);
+  // const showPhotos =photos?.map(function(data){
+  //   return data.url
+  // })
 
-  return  <div>{photos && <img src={photos[0].url} alt={photos[0].alt} />}</div>;
-  
+  return (
+    <div>
+      <ShowPhotos photos={photos} />
+    </div>
+  );
 }
-
 export default App;
